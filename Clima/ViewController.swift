@@ -8,11 +8,17 @@
 import UIKit
 import CoreLocation
 
-class ViewController: UIViewController,UITextFieldDelegate,CLLocationManagerDelegate,UIGestureRecognizerDelegate {
+class WeatherViewController: UIViewController,UITextFieldDelegate,CLLocationManagerDelegate,UIGestureRecognizerDelegate {
 
+    
     @IBOutlet weak var conditionImageView: UIImageView!
+    
     @IBOutlet weak var temperatureLabel: UILabel!
+    
     @IBOutlet weak var cityLabel: UILabel!
+    
+    
+   
     
     let locationManager = CLLocationManager()
     
@@ -24,6 +30,7 @@ class ViewController: UIViewController,UITextFieldDelegate,CLLocationManagerDele
     
     var currentState:String = ""
     
+    let apikey = Constants.apikey
     
     @IBOutlet weak var searchTextField: UITextField!
     
@@ -87,20 +94,20 @@ class ViewController: UIViewController,UITextFieldDelegate,CLLocationManagerDele
     
     
     
-    //サーチボタン
+    
     @IBAction func searchButtonAction(_ sender: UIButton) {
         
         if searchTextField.text != "" {
-            //↓これをどうにかしたい。
-            inputLocation = searchTextField.text!
-            getWether()
-            searchTextField.endEditing(true)
-        }else {
-            searchTextField.placeholder = "Type something"
-            
-        }
-        
+                   //↓これをどうにかしたい。
+                   inputLocation = searchTextField.text!
+                   getWether()
+                   searchTextField.endEditing(true)
+               }else {
+                   searchTextField.placeholder = "Type something"
+       
+               }
     }
+    
     
 
     
@@ -108,7 +115,6 @@ class ViewController: UIViewController,UITextFieldDelegate,CLLocationManagerDele
         locationManager.requestLocation()
     }
     
-   
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let loc = locations.last else { return }
         
@@ -139,23 +145,23 @@ class ViewController: UIViewController,UITextFieldDelegate,CLLocationManagerDele
         })
     }
     
+    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("error: \(error.localizedDescription)")
     }
     
     
     
-    public func getWether() {
+    
+    
+    func getWether() {
         Task {
             
-            let API_KEY = "29889ccfe8703e3f024730872e58b036"
-//            let cityName = "London"
-//            let parameter = "lat=\(latitude)&lon=\(longitude)&appid=\(API_KEY)&lang=ja&units=metric"
+//
             
-//            https:api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
             
             //場所で実行できるようにしたい　例　London
-            let url = URL(string: "https:api.openweathermap.org/data/2.5/weather?q=\(self.inputLocation)&appid=\(API_KEY)&lang=ja&units=metric")
+            let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=\(self.inputLocation)&appid=\(Constants.apikey)&lang=ja&units=metric")
             
             let (data,_) = try await URLSession.shared.data(from: url!)
             
@@ -167,29 +173,29 @@ class ViewController: UIViewController,UITextFieldDelegate,CLLocationManagerDele
                 do {
                     //欲しい値　天気、温度、場所
                     let items = try JSONDecoder().decode(Welcome.self, from: data)
-                    let weatherArray = items.weather
+                    let weatherId = items.weather[0]
                     let mainTemp = items.main.temp
                     let name = items.name
                     
-                    for weather in weatherArray {
-                        displayWeather = weather.main
-                    }
-                    
-                    if (displayWeather == "Clouds") {
-                        let img = UIImage(systemName: "cloud")
-                        conditionImageView.image = img
-                        
-                    }else if (displayWeather == "Rain") {
-                        let img = UIImage(systemName: "cloud.rain")
-                        conditionImageView.image = img
-                    }else if (displayWeather == "Clear") {
-                        let img = UIImage(systemName: "sun.max")
-                        conditionImageView.image = img
-                    } else if (displayWeather == "cloud.snow") {
-                        let img = UIImage(systemName: "cloud.rain")
-                        conditionImageView.image = img
-                    }
-                    print(displayWeather)
+//                    switch weatherId {
+//                    case 200...232:
+//                        return "cloud.bolt"
+//                    case 300...321:
+//                        return "cloud.drizzle"
+//                    case 500...531:
+//                        return "cloud.rain"
+//                    case 600...622:
+//                        return "cloud.snow"
+//                    case 701...781:
+//                        return "cloud.fog"
+//                    case 800:
+//                        return "sun.max"
+//                    case 801...804:
+//                        return "cloud.bolt"
+//                    default:
+//                        return "cloud"
+//                    }
+                    print(weatherId)
 
                     
                     tem = mainTemp
@@ -208,30 +214,34 @@ class ViewController: UIViewController,UITextFieldDelegate,CLLocationManagerDele
             
             
         }
+        
+    }
+    
+    
+    
+    
 
-
-}
 
     // MARK: - Welcome
     struct Welcome: Codable {
         let coord: Coord
         let weather: [Weather]
-        let base: String
+//        let base: String
         let main: Main
-        let visibility: Int
-        let wind: Wind
-        let clouds: Clouds
-        let dt: Int
-        let sys: Sys
-        let timezone, id: Int
+//        let visibility: Int
+//        let wind: Wind
+//        let clouds: Clouds
+//        let dt: Int
+//        let sys: Sys
+//        let id: Int
         let name: String
-        let cod: Int
+//        let cod: Int
     }
 
     // MARK: - Clouds
-    struct Clouds: Codable {
-        let all: Int
-    }
+//    struct Clouds: Codable {
+//        let all: Int
+//    }
 
     // MARK: - Coord
     struct Coord: Codable {
@@ -253,11 +263,11 @@ class ViewController: UIViewController,UITextFieldDelegate,CLLocationManagerDele
     }
 
     // MARK: - Sys
-    struct Sys: Codable {
-        let type, id: Int
-        let country: String
-        let sunrise, sunset: Int
-    }
+//    struct Sys: Codable {
+//        let type, id: Int
+//        let country: String
+//        let sunrise, sunset: Int
+//    }
 
     // MARK: - Weather
     struct Weather: Codable {
@@ -266,10 +276,10 @@ class ViewController: UIViewController,UITextFieldDelegate,CLLocationManagerDele
     }
 
     // MARK: - Wind
-    struct Wind: Codable {
-        let speed: Double
-        let deg: Int
-    }
+//    struct Wind: Codable {
+//        let speed: Double
+//        let deg: Int
+//    }
     
 }
 
