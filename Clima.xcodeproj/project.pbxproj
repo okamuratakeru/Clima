@@ -16,7 +16,6 @@
 		98339A2E2B484A5D0059EBE0 /* light_background.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 98339A2D2B484A5D0059EBE0 /* light_background.pdf */; };
 		98339A302B484A650059EBE0 /* dark_background.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 98339A2F2B484A650059EBE0 /* dark_background.pdf */; };
 		9857F2352B5E61E100E897CE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9857F2342B5E61E100E897CE /* Constants.swift */; };
-		98CFB6E12B4AEC4F00ED107D /* APIkey.plist in Resources */ = {isa = PBXBuildFile; fileRef = 98CFB6E02B4AEC4E00ED107D /* APIkey.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,7 +30,6 @@
 		98339A2D2B484A5D0059EBE0 /* light_background.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = light_background.pdf; path = "../../Clima-iOS13/Clima/light_background.pdf"; sourceTree = "<group>"; };
 		98339A2F2B484A650059EBE0 /* dark_background.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = dark_background.pdf; path = "../../Clima-iOS13/Clima/dark_background.pdf"; sourceTree = "<group>"; };
 		9857F2342B5E61E100E897CE /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		98CFB6E02B4AEC4E00ED107D /* APIkey.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = APIkey.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,7 +65,6 @@
 				98339A192B4847E60059EBE0 /* AppDelegate.swift */,
 				98339A1B2B4847E60059EBE0 /* SceneDelegate.swift */,
 				98339A1D2B4847E60059EBE0 /* ViewController.swift */,
-				98CFB6E02B4AEC4E00ED107D /* APIkey.plist */,
 				98339A1F2B4847E60059EBE0 /* Main.storyboard */,
 				98339A222B4847E80059EBE0 /* Assets.xcassets */,
 				98339A242B4847E80059EBE0 /* LaunchScreen.storyboard */,
@@ -137,7 +134,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				98CFB6E12B4AEC4F00ED107D /* APIkey.plist in Resources */,
 				98339A302B484A650059EBE0 /* dark_background.pdf in Resources */,
 				98339A262B4847E80059EBE0 /* LaunchScreen.storyboard in Resources */,
 				98339A232B4847E80059EBE0 /* Assets.xcassets in Resources */,
